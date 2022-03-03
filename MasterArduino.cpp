@@ -14,7 +14,7 @@ void loop() {
 
 }
 
-// Return true if both the robot is above white area and a sound of 3600Hz is bieng played.
+// Return true if both the robot is above white area and a sound of 3600Hz is being played.
 public boolean both()
 {
   return checkWhiteArea() // checks if the robot is above white area.
