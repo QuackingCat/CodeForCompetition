@@ -86,7 +86,7 @@ void recieveEvent() {
 }
 
 
-// move forwade
+// move forward
 void moveForward() {
 	digitalWrite(pinPrimeAxis1, LOW);
 	digitalWrite(pinPrimeAxis2, LOW);
