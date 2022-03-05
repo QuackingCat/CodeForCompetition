@@ -43,7 +43,7 @@ const int pinFES1 = 7; // goes to INA.
 const int pinFES2 = 8; // goes to INB.
 
 // I2C registers' addresses.
-const int addressGyro = b1101001; // The address of the gyro's register (I2C shit).
+const int addressGyro = 0x68; // The address of the gyro's register (I2C shit).
 const int addressSlave = b1000101; // The address of the slave's register (lol 69).
 
 
@@ -73,6 +73,11 @@ void setup() {
 	
 	// I2C shit
 	Wire.begin(b1); // turn on the I2C and set the address of this device's register.
+	
+	Wire.beginTransmission(addressGyro); // start the transmission to the gyro.
+	Wire.write(0x6B); // PWR_MGMT_1 register.
+	Wire.write(0); // wakes up the sensor.
+	Wire.endTransmission(true); // releasing the I2C bus.
 }
 
 
@@ -105,5 +110,10 @@ void run()
 
 // returns the robot's rotation degree with respect to the initial angle.
 int getDegree(){
+	Wire.beginTransmission(addressGyro); // start the transmission to the gyro.
+	Wire.write(0x47); // start reading from this register.
+	Wire.endTransmission(false); // releasing the I2C bus.
 	
+	Wire.requestFrom(addressGyro, 2, true); // asking for two registers starting at "0x47"
+	return (Wire.read() << 8) | Wire.read(); // reading registers "0x47" (GYRO_ZOUT_H) and "0x48" (GYRO_ZOUT_L). 
 }
