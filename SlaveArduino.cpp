@@ -76,22 +76,31 @@ void loop() {
 }
 
 
-// when the master is sending data this function will start
+// when the master is sending data this function will start.
 void recieveEvent(int input) {
 	lstTrans = "";
-	while (0 < Wire.available()) // adding the transmission to "lstTrans" character by character.
+	while (Wire.available()) // adding the transmission to "lstTrans" character by character.
 		lastTrans += (char)Wire.read();
 	
 	// handling the received data
-	
+	if (strcmp(lstTrans, "forward"))
+		moveForward();
+	else if (strcmp(lstTrans, "backward"))
+		moveBackward();
+	else if (strcmp(lstTrans, "right"))
+		moveveRight();
+	else if (strcmp(lstTrans, "left"))
+		moveLeft();
+	else if (strcmp(lstTrans, "stop"))
 }
 
+
+// when the msater asks for data this function will start.
 void requestEvent() {
 	if (strcmp(lstTrans, "isWhiteArea"))
 		send(checkWhiteArea());
-	// needs to finish the move forward, back, right, left
-	
 }
+
 
 // move forward
 void moveForward() {
@@ -130,6 +139,17 @@ void moveRight() {
 void moveLeft() {
 	digitalWrite(pinPrimeAxis1, LOW);
 	digitalWrite(pinPrimeAxis2, HIGH);
+	digitalWrite(pinSecAxis1, LOW);
+	digitalWrite(pinSecAxis2, LOW);
+	digitalWrite(pinSecAxis3, LOW);
+	digitalWrite(pinSecAxis4, Low);
+}
+
+
+// stop the robot
+void stopMoving() {
+	digitalWrite(pinPrimeAxis1, LOW);
+	digitalWrite(pinPrimeAxis2, LOW);
 	digitalWrite(pinSecAxis1, LOW);
 	digitalWrite(pinSecAxis2, LOW);
 	digitalWrite(pinSecAxis3, LOW);
