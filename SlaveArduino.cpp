@@ -18,10 +18,10 @@
 /*	constants	*/
 
 // pins for the US sensors
-const int pinEchoUSF = 3; // PWM
 const int pinTrigUSF = 2;
-const int pinEchoUSB = 5; // PWM
+const int pinEchoUSF = 3; // PWM
 const int pinTrigUSB = 4;
+const int pinEchoUSB = 5; // PWM
 
 // pins for the motors' controllers
 // prime axis
