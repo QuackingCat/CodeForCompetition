@@ -82,12 +82,13 @@ void setup() {
 
 
 void loop() {
+	while (!startConditions()) continue; // waits for the required conditions to start the run.
 	
 }
 
 
 // Return true if the robot is above white area and a sound of 3600Hz is being played for atleast 2 seconds.
-boolean both()
+boolean startConditions()
 {
 	for (int i = 0; i < 4; i++){
 		delay(500);
@@ -96,15 +97,6 @@ boolean both()
 	}
 	
 	return true;
-}
-
-
-void run()
-{
-	if(both())
-	{
-		//call the function to start the maze
-	}
 }
 
 
@@ -132,6 +124,31 @@ boolean checkSound()
 // checks if there is white area under the robot.
 boolean checkWhiteArea() {
 	return askSlave("isWhiteArea");
+}
+
+
+// move forward
+void moveForward() {
+	sendToSlave("forward");
+}
+
+// move backward
+void moveBackward() {
+	sendToSlave("backward");
+}
+
+// move right
+void moveRight() {
+	sendToSlave("right");
+}
+
+// move left
+void moveLeft() {
+	sendToSlave("left")
+}
+
+void stopMoving() {
+	sendToSlave("stop");
 }
 
 
