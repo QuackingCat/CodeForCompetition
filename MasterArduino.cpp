@@ -119,6 +119,16 @@ int getDegrees(){
 }
 
 
+boolean checkSound()
+{
+	int sensorValue = analogRead(3);
+	while (sensorValue < 3600)
+	{
+		sensorValue = analogRead(3);
+	}
+}
+
+
 // checks if there is white area under the robot.
 boolean checkWhiteArea() {
 	return askSlave("isWhiteArea");
