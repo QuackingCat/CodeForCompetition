@@ -44,7 +44,7 @@ const int pinFES2 = 8; // goes to INB.
 
 // I2C registers' addresses.
 const int addressGyro = 0x68; // The address of the gyro's register (I2C shit).
-const int addressSlave = b1000101; // The address of the slave's register (lol 69).
+const int addressSlave = 0x45; // The address of the slave's register (lol 69).
 
 
 /*	main code	*/
@@ -109,11 +109,33 @@ void run()
 
 
 // returns the robot's rotation degree with respect to the initial angle.
-int getDegree(){
+int getDegrees(){
 	Wire.beginTransmission(addressGyro); // start the transmission to the gyro.
 	Wire.write(0x47); // start reading from this register.
-	Wire.endTransmission(false); // releasing the I2C bus.
+	Wire.endTransmission(false); // commit without releasing the I2C bus.
 	
-	Wire.requestFrom(addressGyro, 2, true); // asking for two registers starting at "0x47"
+	Wire.requestFrom(addressGyro, 2, true); // asking for two registers starting at "0x47".
 	return (Wire.read() << 8) | Wire.read(); // reading registers "0x47" (GYRO_ZOUT_H) and "0x48" (GYRO_ZOUT_L). 
+}
+
+
+// checks if there is white area under the robot.
+boolean checkWhiteArea() {
+	return askSlave("isWhiteArea");
+}
+
+
+// sends string to the slave.
+void sendToSlave(string str) {
+	Wire.beginTransmission(addressSlave); // start the transmission to the gyro.
+	Wire.write(str); // start reading from this register.
+	Wire.endTransmission(true); // commit and releasing the I2C bus.
+}
+
+
+// ask for info fron the slave based on string.
+int askSlave(string str) {
+	sendToSlave(str);
+	Wire.requestFrom(addressSlave, 1, true); // asking for one register.
+	return Wire.read();
 }
