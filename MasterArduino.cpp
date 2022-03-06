@@ -1,6 +1,6 @@
 /*
  * free pins (if used pls delete from here):
- * 0, 1, 2, 4, 6 (PWM), 13.
+ * 0, 1, 9-11 (PWM), 13.
  *
  * terminology: (so much complicated acronyms)
  * US - Ultra sonic.
@@ -21,21 +21,21 @@
 /*	constants	*/
 
 // pins for the US sensors
-const int pinEchoUSR = A0;
-const int pinTrigUSR = A1;
-const int pinEchoUSL = A2;
-const int pinTrigUSL = A3;
+const int pinTrigUSR = 2;
+const int pinEchoUSR = 3; // PWM
+const int pinTrigUSL = 4;
+const int pinEchoUSL = 5; // PWM
 
-// pins for the sound sensor (PWM)
-const int pinSS = 3;
+// pins for the sound sensor
+const int pinSS = A0;
 
-// pins for the turret (PWM)
-const int pinTurret = 5;
+// pins for the turret (servo)
+const int pinTurret = 6; // PWM
 
-// pins for the fire detection system (PWM)
-const int pinFDS1 = 9;
-const int pinFDS2 = 10;
-const int pinFDS3 = 11;
+// pins for the fire detection system
+const int pinFDS1 = A1;
+const int pinFDS2 = A2;
+const int pinFDS3 = A3;
 
 // pins for the fire extinguishing system
 // see "ConfigurationsEFS.png" to know how to control it.
