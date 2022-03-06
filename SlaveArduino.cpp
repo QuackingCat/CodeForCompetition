@@ -1,6 +1,6 @@
 /*
  * free pins (if used pls delete from here):
- * 0, 1, 2, 8, 9 (PWM), 10 (PWM), 11 (PWM).
+ * 0, 1, 2, 6 (PWM), 7, A1-A3.
  *
  * terminology: (so many complicated acronyms)
  * US - Ultra sonic.
@@ -18,23 +18,23 @@
 /*	constants	*/
 
 // pins for the US sensors
-const int pinEchoUSF = A0;
-const int pinTrigUSF = A1;
-const int pinEchoUSB = A2;
-const int pinTrigUSB = A3;
+const int pinEchoUSF = 3; // PWM
+const int pinTrigUSF = 2;
+const int pinEchoUSB = 5; // PWM
+const int pinTrigUSB = 4;
 
 // pins for the motors' controllers
 // prime axis
 const int pinPrimeAxis1 = 12; // goes to in1
 const int pinPrimeAxis2 = 13; // goes to in2
 // secondary axises
-const int pinSecAxis1 = 4; // goes to in1
-const int pinSecAxis2 = 5; // goes to in2
-const int pinSecAxis3 = 6; // goes to in3
-const int pinSecAxis4 = 7; // goes to in4
+const int pinSecAxis1 = 8; // goes to in1
+const int pinSecAxis2 = 9; // goes to in2
+const int pinSecAxis3 = 10; // goes to in3
+const int pinSecAxis4 = 11; // goes to in4
 
-// pins for the reflected light sensor (PWM)
-const int pinRefLight = 3;
+// pins for the reflected light sensor
+const int pinRefLight = A0;
 
 // I2C registers' addresses
 const int addressMaster = b1; // The address of the master's register
@@ -186,6 +186,6 @@ int getDis(int trig, int echo) {
 
 // return true if there is white area under the robot.
 boolean checkWhiteArea() {
-	int loewerBoundWhite = 450;
-	return analogRead(pinRedLight) > lowerBoundWhite;
+	int loewerBoundWhite = 100;
+	return analogRead(pinRedLight) < lowerBoundWhite;
 }
