@@ -158,22 +158,22 @@ void stopMoving() {
 
 
 // returns the front distnance.
-void getFrontDis() {
-	sendToSlave("disFront");
+int getFrontDis() {
+	return askSlave("disFront");
 }
 
 // returns the back distnance.
-void getBackDis() {
-	sendToSlave("disBack");
+int getBackDis() {
+	return askSlave("disBack");
 }
 
 // returns the right distnance.
-void getRightDis() {
+int getRightDis() {
 	return getDis(pinTrigUSR, pinEchoUSR);
 }
 
 // returns the left distnance.
-void getLeftDis() {
+int getLeftDis() {
 	return getDis(pinTrigUSL, pinEchoUSL);
 }
 
