@@ -12,6 +12,7 @@
 /*	libraries	*/
 
 #include <Wire.h>
+#include <string.h>
 
 
 /*	constants	*/
@@ -64,9 +65,9 @@ void setup() {
 	pinMode(pinRedLight, INPUT);
 	
 	// I2C shit
-	wire.begin(b1000101); // turn on the I2C and set the address of this device's register.
-	Wire.onReceive(receiveEvent); // register event
-	
+	Wire.begin(b1000101); // turn on the I2C and set the address of this device's register.
+	Wire.onReceive(receiveEvent); // when asked to deliver info.
+	Wire.onRequest(requestEvent); // when asked to do something.
 }
 
 
@@ -76,7 +77,7 @@ void loop() {
 
 
 // when the master is sending data this function will start
-void recieveEvent() {
+void recieveEvent(int input) {
 	lstTrans = "";
 	while (0 < Wire.available()) // adding the transmission to "lstTrans" character by character.
 		lastTrans += (char)Wire.read();
@@ -85,6 +86,12 @@ void recieveEvent() {
 	
 }
 
+void requestEvent() {
+	if (strcmp(lstTrans, "isWhiteArea"))
+		send(checkWhiteArea());
+	// needs to finish the move forward, back, right, left
+	
+}
 
 // move forward
 void moveForward() {
@@ -127,4 +134,11 @@ void moveLeft() {
 	digitalWrite(pinSecAxis2, LOW);
 	digitalWrite(pinSecAxis3, LOW);
 	digitalWrite(pinSecAxis4, Low);
+}
+
+
+// return true if there is white area under the robot.
+boolean checkWhiteArea() {
+	int loewerBoundWhite = 450;
+	return analogRead(pinRedLight) > lowerBoundWhite;
 }
