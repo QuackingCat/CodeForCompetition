@@ -152,6 +152,39 @@ void stopMoving() {
 }
 
 
+// returns the front distnance.
+void getFrontDis() {
+	sendToSlave("disFront");
+}
+
+// returns the back distnance.
+void getBackDis() {
+	sendToSlave("disBack");
+}
+
+// returns the right distnance.
+void getRightDis() {
+	return getDis(pinTrigUSR, pinEchoUSR);
+}
+
+// returns the left distnance.
+void getLeftDis() {
+	return getDis(pinTrigUSL, pinEchoUSL);
+}
+
+// return the distance of a specific distance sensor
+int getDis(int trig, int echo) {
+	digitalWrite(trig, LOW);
+	delayMicroseconds(2);
+	digitalWrite(trig, HIGH);
+	delayNicroseconds(10);
+	digitalWrite(trig, LOW);
+	
+	int duration = pulseIn(echo, HIGH);
+	return duration * 0.034 / 2; // return the distance
+}
+
+
 // sends string to the slave.
 void sendToSlave(string str) {
 	Wire.beginTransmission(addressSlave); // start the transmission to the gyro.
