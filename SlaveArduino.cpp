@@ -99,6 +99,10 @@ void recieveEvent(int input) {
 void requestEvent() {
 	if (strcmp(lstTrans, "isWhiteArea"))
 		send(checkWhiteArea());
+	else if (strcmp(lstTrans, "disFront"))
+		send(getFrontDis());
+	else if (strcmp(lstTrans, "disBack"))
+		send(getBackDis());
 }
 
 
@@ -154,6 +158,29 @@ void stopMoving() {
 	digitalWrite(pinSecAxis2, LOW);
 	digitalWrite(pinSecAxis3, LOW);
 	digitalWrite(pinSecAxis4, Low);
+}
+
+
+// returns the front distance.
+void getFrontDis() {
+	getDis(pinTrigUSF, pinEchoUSF);
+}
+
+// returns the front distnance.
+void getBackDis() {
+	getDis(pinTrigUSB, pinEchoUSB);
+}
+
+// return the distance of a specific distance sensor
+int getDis(int trig, int echo) {
+	digitalWrite(trig, LOW);
+	delayMicroseconds(2);
+	digitalWrite(trig, HIGH);
+	delayNicroseconds(10);
+	digitalWrite(trig, LOW);
+	
+	int duration = pulseIn(echo, HIGH);
+	return duration * 0.034 / 2; // return the distance
 }
 
 
