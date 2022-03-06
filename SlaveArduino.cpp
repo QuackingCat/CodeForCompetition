@@ -162,13 +162,13 @@ void stopMoving() {
 
 
 // returns the front distance.
-void getFrontDis() {
-	getDis(pinTrigUSF, pinEchoUSF);
+int getFrontDis() {
+	return getDis(pinTrigUSF, pinEchoUSF);
 }
 
 // returns the front distnance.
-void getBackDis() {
-	getDis(pinTrigUSB, pinEchoUSB);
+int getBackDis() {
+	return getDis(pinTrigUSB, pinEchoUSB);
 }
 
 // return the distance of a specific distance sensor
