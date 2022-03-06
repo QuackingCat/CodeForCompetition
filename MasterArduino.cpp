@@ -82,7 +82,10 @@ void setup() {
 
 
 void loop() {
-	while (!startConditions()) continue; // waits for the required conditions to start the run.
+	while (!startConditions()) { // waits for the required conditions to be true so we can start the run.
+		continue; 
+	}
+	
 	
 }
 
@@ -92,8 +95,9 @@ boolean startConditions()
 {
 	for (int i = 0; i < 4; i++){
 		delay(500);
-		if (!(checkWhiteArea() && checkSound()))
+		if (!(checkWhiteArea() && checkSound())) {
 			return false;
+		}
 	}
 	
 	return true;
@@ -147,6 +151,7 @@ void moveLeft() {
 	sendToSlave("left")
 }
 
+// stop moving
 void stopMoving() {
 	sendToSlave("stop");
 }
