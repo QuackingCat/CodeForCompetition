@@ -16,35 +16,36 @@
 /*	libraries	*/
 
 #include <Wire.h>
+#include <arduinoFFT.h>
 
 
 /*	constants	*/
 
 // pins for the US sensors
-const int pinTrigUSR = 2;
-const int pinEchoUSR = 3; // PWM
-const int pinTrigUSL = 4;
-const int pinEchoUSL = 5; // PWM
+#define pinTrigUSR = 2;
+#define pinEchoUSR = 3; // PWM
+#define pinTrigUSL = 4;
+#define pinEchoUSL = 5; // PWM
 
 // pins for the sound sensor
-const int pinSS = A0;
+#define pinSS = A0;
 
 // pins for the turret (servo)
-const int pinTurret = 6; // PWM
+#define pinTurret = 6; // PWM
 
 // pins for the fire detection system
-const int pinFDS1 = A1;
-const int pinFDS2 = A2;
-const int pinFDS3 = A3;
+#define pinFDS1 = A1;
+#define pinFDS2 = A2;
+#define pinFDS3 = A3;
 
 // pins for the fire extinguishing system
 // see "ConfigurationsEFS.png" to know how to control it.
-const int pinFES1 = 7; // goes to INA.
-const int pinFES2 = 8; // goes to INB.
+#define pinFES1 = 7; // goes to INA.
+#define pinFES2 = 8; // goes to INB.
 
 // I2C registers' addresses.
-const int addressGyro = 0x68; // The address of the gyro's register (I2C shit).
-const int addressSlave = 0x45; // The address of the slave's register (lol 69).
+#define addressGyro = 0x68; // The address of the gyro's register (I2C shit).
+#define addressSlave = 0x45; // The address of the slave's register (lol 69).
 
 
 /*	main code	*/
