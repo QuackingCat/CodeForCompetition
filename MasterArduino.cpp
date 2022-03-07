@@ -1,16 +1,16 @@
 /*
- * free pins (if used pls delete from here):
- * 0, 1, 9-11 (PWM), 13.
- *
- * terminology: (so much complicated acronyms)
- * US - Ultra sonic.
- * USR - Ultra sonic sensor on the right.
- * USL - Ultra sonic sensor on the left.
- * SS - sound sensor.
- * slave - the second arduino.
- * FDS - fire detection system.
- * FES - fire extinguishing system.
- */
+	free pins (if used pls delete from here):
+	0, 1, 9-11 (PWM), 13.
+
+	terminology: (so much complicated acronyms)
+		US - Ultra sonic.
+		USR - Ultra sonic sensor on the right.
+		USL - Ultra sonic sensor on the left.
+		SS - sound sensor.
+		slave - the second arduino.
+		FDS - fire detection system.
+		FES - fire extinguishing system.
+*/
 
 
 /*	libraries	*/
