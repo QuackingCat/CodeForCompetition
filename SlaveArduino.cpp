@@ -19,26 +19,26 @@
 /*	constants	*/
 
 // pins for the US sensors
-const int pinTrigUSF = 2;
-const int pinEchoUSF = 3; // PWM
-const int pinTrigUSB = 4;
-const int pinEchoUSB = 5; // PWM
+#define pinTrigUSF = 2;
+#define pinEchoUSF = 3; // PWM
+#define pinTrigUSB = 4;
+#define pinEchoUSB = 5; // PWM
 
 // pins for the motors' controllers
 // prime axis
-const int pinPrimeAxis1 = 12; // goes to in1
-const int pinPrimeAxis2 = 13; // goes to in2
+#define pinPrimeAxis1 = 12; // goes to in1
+#define pinPrimeAxis2 = 13; // goes to in2
 // secondary axises
-const int pinSecAxis1 = 8; // goes to in1
-const int pinSecAxis2 = 9; // goes to in2
-const int pinSecAxis3 = 10; // goes to in3
-const int pinSecAxis4 = 11; // goes to in4
+#define pinSecAxis1 = 8; // goes to in1
+#define pinSecAxis2 = 9; // goes to in2
+#define pinSecAxis3 = 10; // goes to in3
+#define pinSecAxis4 = 11; // goes to in4
 
 // pins for the reflected light sensor
-const int pinRefLight = A0;
+#define pinRefLight = A0;
 
 // I2C registers' addresses
-const int addressMaster = b1; // The address of the master's register
+#define addressMaster = b1; // The address of the master's register
 
 
 /*	variables	*/
