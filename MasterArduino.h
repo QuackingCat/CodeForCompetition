@@ -4,12 +4,12 @@
 const int pinSS = A0;
 
 // pins for the turret (servo)
-const int pinTurret = 6; // PWM
+const int pinTurret = 6; // PWM pin
 
 // pins for the fire detection system
-const int pinFDS1 = A1;
-const int pinFDS2 = A2;
-const int pinFDS3 = A3;
+const int pinFDS1 = A1; // IR sensor
+const int pinFDS2 = A2; // IR sensor
+const int pinFDS3 = A3; // IR sensor
 
 // pins for the fire extinguishing system
 // see "ConfigurationsEFS.png" to know how to control it.
