@@ -1,12 +1,13 @@
 /*
- * free pins (if used pls delete from here):
- * 0, 1, 2, 6 (PWM), 7, A1-A3.
- *
- * terminology: (so many complicated acronyms)
- * US - Ultra sonic.
- * USF - Ultra sonic sensor on the front.
- * USB - Ultra sonic sensor on the back.
+	free pins (if used pls delete from here):
+	0, 1, 2, 6 (PWM), 7, A1-A3.
+	
+	terminology: (so many complicated acronyms)
+		US - Ultra sonic.
+		USF - Ultra sonic sensor on the front.
+		USB - Ultra sonic sensor on the back.
  */
+
 
 
 /*	libraries	*/
