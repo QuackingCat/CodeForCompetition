@@ -22,30 +22,44 @@
 /*	constants	*/
 
 // pins for the US sensors
-#define pinTrigUSR = 2;
-#define pinEchoUSR = 3; // PWM
-#define pinTrigUSL = 4;
-#define pinEchoUSL = 5; // PWM
+#define pinTrigUSR 2
+#define pinEchoUSR 3 // PWM
+#define pinTrigUSL 4
+#define pinEchoUSL 5 // PWM
 
 // pins for the sound sensor
-#define pinSS = A0;
+#define pinSS A0
 
 // pins for the turret (servo)
-#define pinTurret = 6; // PWM
+#define pinTurret 6 // PWM
 
 // pins for the fire detection system
-#define pinFDS1 = A1;
-#define pinFDS2 = A2;
-#define pinFDS3 = A3;
+#define pinFDS1 A1
+#define pinFDS2 A2
+#define pinFDS3 A3
 
 // pins for the fire extinguishing system
 // see "ConfigurationsEFS.png" to know how to control it.
-#define pinFES1 = 7; // goes to INA.
-#define pinFES2 = 8; // goes to INB.
+#define pinFES1 7 // goes to INA.
+#define pinFES2 8 // goes to INB.
 
-// I2C registers' addresses.
-#define addressGyro = 0x68; // The address of the gyro's register (I2C shit).
-#define addressSlave = 0x45; // The address of the slave's register (lol 69).
+// I2C registers' addresses
+#define addressGyro 0x68 // The address of the gyro's register (I2C shit).
+#define addressSlave 0x45 // The address of the slave's register (lol 69).
+
+// arduinoFFT setup
+#define SAMPLES 128 // number of checks.
+#define SAMPLING_FREQUENCT 7200 // twice the highest frequency expected.
+#define WANTED_FREQUENCY 3600
+
+
+
+/*	variables	*/
+
+// some shit for the sound sensor.
+arduinoFFT FFT = arduinoFFT();
+unsigned int samplingPeriod;
+
 
 
 /*	main code	*/
@@ -59,6 +73,7 @@ void setup() {
 	
 	// Sound sensor
 	pinMode(pinSS, INPUT);
+	samplingPeriod = round(1000000^(1.0/SAMPLING_FREQUENCT));
 	
 	// turret
 	pinMode(pinTurret, OUTPUT);
@@ -106,7 +121,7 @@ boolean startConditions()
 
 
 // returns the robot's rotation degree with respect to the initial angle.
-int getDegrees(){
+int getDegrees() {
 	Wire.beginTransmission(addressGyro); // start the transmission to the gyro.
 	Wire.write(0x47); // start reading from this register.
 	Wire.endTransmission(false); // commit without releasing the I2C bus.
@@ -116,13 +131,29 @@ int getDegrees(){
 }
 
 
-boolean checkSound()
-{
-	int sensorValue = analogRead(3);
-	while (sensorValue < 3600)
-	{
-		sensorValue = analogRead(3);
+// return true if sound of 3600Hz is being played.
+boolean checkSound() {
+	unsigned long microSeconds;
+	double vReal[SAMPLES];
+	double vImag[SAMPLES] = {0}; // creates and sets all the array to zeros
+	
+	for (int i = 0; i < SAMPLES; i++) {
+		microSeconds = micros();
+		vReal[i] = analogRead(pinSS); // puts the current value from the sensor in the array
+		
+		while (micros() < (microSensors + samplingPeriod)) { // waits some time.
+			continue;
+		}
 	}
+	
+	// perform fast fourier transform on the samples.
+	FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
+	FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
+	FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
+	
+	int frequency = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY); // the frequency.
+	
+	return ( (WANTED_FREQUENCY - 40) < frequency ) && ( frequency < (WANTED_FREQUENCY + 40) );
 }
 
 
