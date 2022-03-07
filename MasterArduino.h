@@ -1,20 +1,20 @@
 /*	    pins    	*/
 
 // pins for the sound sensor
-const int pinSS = A0;
+int pinSS = A0;
 
 // pins for the turret (servo)
-const int pinTurret = 6; // PWM pin
+int pinTurret = 6; // PWM pin
 
 // pins for the fire detection system
-const int pinFDS1 = A1; // IR sensor
-const int pinFDS2 = A2; // IR sensor
-const int pinFDS3 = A3; // IR sensor
+int pinFDS1 = A1; // IR sensor
+int pinFDS2 = A2; // IR sensor
+int pinFDS3 = A3; // IR sensor
 
 // pins for the fire extinguishing system
 // see "ConfigurationsEFS.png" to know how to control it.
-const int pinFES1 = 7; // goes to INA.
-const int pinFES2 = 8; // goes to INB.
+int pinFES1 = 7; // goes to INA.
+int pinFES2 = 8; // goes to INB.
 
 
 
