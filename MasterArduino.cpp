@@ -49,7 +49,7 @@
 
 // arduinoFFT setup
 #define SAMPLES 128 // number of checks.
-#define SAMPLING_FREQUENCT 7200 // twice the highest frequency expected.
+#define SAMPLING_FREQUENCY 7200 // twice the highest frequency expected.
 #define WANTED_FREQUENCY 3600
 
 
@@ -73,7 +73,7 @@ void setup() {
 	
 	// Sound sensor
 	pinMode(pinSS, INPUT);
-	samplingPeriod = round(1000000^(1.0/SAMPLING_FREQUENCT));
+	samplingPeriod = round(1000000^(1.0/SAMPLING_FREQUENCY));
 	
 	// turret
 	pinMode(pinTurret, OUTPUT);
