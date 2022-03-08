@@ -141,7 +141,7 @@ boolean checkSound() {
 		microSeconds = micros();
 		vReal[i] = analogRead(pinSS); // puts the current value from the sensor in the array
 		
-		while (micros() < (microSensors + samplingPeriod)) { // waits some time.
+		while (micros() < (microSeconds + samplingPeriod)) { // waits some time.
 			continue;
 		}
 	}
