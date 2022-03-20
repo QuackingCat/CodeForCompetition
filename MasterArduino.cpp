@@ -120,12 +120,27 @@ boolean startConditions()
 }
 
 
+//flag if dog is in pos A
+boolean dogA = false
+
+//flag if dog is in pos C
+boolean dogC = false
+
 //runs all the way to the 1st room and till the main intersection
-void room1()
+void Room1()
 {
+	if (getLeftDis() > 60) //finds if the dog is in A
+	{
+		dogA = True;
+	}
 	moveForward();
 	while (getBackDis() > 110); //till the main intersection
 	stopMoving(); //to stop in the intersection
+	
+	if (getLeftDis() > 50) //finds if dog is in C
+	{
+		dogC = true;
+	}
 	
 	moveRight();
 	while (getRightDis() > 15); //till the wall
@@ -167,10 +182,7 @@ void Room2()
 //runs all the way to the 3rd room and to the intersection where the dog is
 void Room3()
 {
-	if (getBackDis <20) //checks where the door is (is it on top or bottom)
-		moveLeft();
-	
-	else
+	if (getLeftDis() <20) //checks where the door is (is it on top or bottom)
 	{
 		moveBackward();
 		while (getFrontDis() < 70)
@@ -190,6 +202,39 @@ void Room3()
 	moveBackward(); //goes to the exsit of the room and to the intersection with the dog
 	while(getFrontDis() < 110)
 	stopMoving();
+}
+
+//runs from the dog intersection all the way home
+void Room4()
+{
+	if (dogC) //if the dog is in pos C
+	{
+		moveBackward(); //gets to the interection next to the room and across from the home
+		while (getBackDis() > 10)
+		stopMoving();
+		
+		moveRight(); //gets inffront of the final room
+		while (getgetLeftDis() < 60)
+		stopMoving();
+		
+		moveForward(); //enters the room
+		delay(1200);
+		stopMoving();
+		
+		checkFire();
+		
+		moveBackward(); //esits the room
+		while (getBackDis() > 10)
+		stopMoving();
+		
+		moveRight(); //arives home
+		while (getLeftDis() < 140)
+		stopMoving()
+		//turn LED to high
+	}
+	
+	else if(dogA) //if dog is in A
+		
 }
 
 // returns the robot's rotation degree with respect to the initial angle.
