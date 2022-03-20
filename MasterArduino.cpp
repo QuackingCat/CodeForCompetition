@@ -120,6 +120,48 @@ boolean startConditions()
 }
 
 
+//runs all the way to the 1st room and till the main intersection
+void Room1()
+{
+	while (getRightDis() < 20) //till the main intersection
+		moveForward();
+	stopMoving(); //to stop in the intersection
+	while (getRightDis() > 10) //till the wall
+		moveRight();
+	stopMoving(); //stop infront of the room
+	for (int i = 0; i < 3; i++)
+		moveBackward();
+	checkFire(); //needs to be done will check for the the fire
+	while (getFrontDis() < 10) //gets out of the room
+		moveForward();
+	stopMoving(); //stops in front of the room
+	while (getRightDis() < 90) //gets back to the intersection
+		moveLeft();
+	stopMoving(); //stops in the intersection
+}
+
+//runs from the main intersection to the 2nd room and gets infront of the next
+void Room2()
+{
+	while (getFrontDis() < 10)
+		moveForward();
+	stopMoving();
+	for (int i = 0; i < 3; i++)
+		moveRight();
+	stopMoving();
+	checkFire();
+	for (int i = 0; i < 3; i++)
+		moveLeft();
+	stopMoving();
+}
+
+//runs all the way to the 3rd room and to the intersection where the dog is
+void Room3()
+{
+	if (getBackDis <20)
+		
+}
+
 // returns the robot's rotation degree with respect to the initial angle.
 int getDegrees() {
 	Wire.beginTransmission(addressGyro); // start the transmission to the gyro.
