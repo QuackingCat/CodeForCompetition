@@ -98,10 +98,10 @@ void setup() {
 
 
 void loop() {
-	while (!startConditions()) { // waits for the required conditions to be true so we can start the run.
-		continue; 
-	}
+	while (!startConditions()); // waits for the required conditions to be true so we can start the run.
 	
+	room1();
+	room2();
 	
 }
 
@@ -121,37 +121,46 @@ boolean startConditions()
 
 
 //runs all the way to the 1st room and till the main intersection
-void Room1()
+void room1()
 {
-	while (getRightDis() < 20) //till the main intersection
-		moveForward();
+	moveForward();
+	while (getBackDis() > 110); //till the main intersection
 	stopMoving(); //to stop in the intersection
-	while (getRightDis() > 10) //till the wall
-		moveRight();
+	
+	moveRight();
+	while (getRightDis() > 15); //till the wall
 	stopMoving(); //stop infront of the room
-	for (int i = 0; i < 3; i++)
-		moveBackward();
+	
+	moveBackward();
+	while (getFrontDis() < 70); // move inside the room
+	stopMoving();
+	
 	checkFire(); //needs to be done will check for the the fire
-	while (getFrontDis() < 10) //gets out of the room
-		moveForward();
+	
+	moveForward();
+	while (getFrontDis() > 15); //gets out of the room
 	stopMoving(); //stops in front of the room
+	
+	moveLeft();
 	while (getRightDis() < 90) //gets back to the intersection
-		moveLeft();
 	stopMoving(); //stops in the intersection
 }
 
 //runs from the main intersection to the 2nd room and gets infront of the next
 void Room2()
 {
-	while (getFrontDis() < 10)
-		moveForward();
+	moveForward();
+	while (getFrontDis() > 20);
 	stopMoving();
-	for (int i = 0; i < 3; i++)
-		moveRight();
+	
+	moveRight();
+	delay (1200);
 	stopMoving();
+	
 	checkFire();
-	for (int i = 0; i < 3; i++)
-		moveLeft();
+	
+	moveLeft();
+	delay (1200);
 	stopMoving();
 }
 
