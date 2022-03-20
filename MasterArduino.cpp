@@ -167,8 +167,29 @@ void Room2()
 //runs all the way to the 3rd room and to the intersection where the dog is
 void Room3()
 {
-	if (getBackDis <20)
-		
+	if (getBackDis <20) //checks where the door is (is it on top or bottom)
+		moveLeft();
+	
+	else
+	{
+		moveBackward();
+		while (getFrontDis() < 70)
+		stopMoving();
+	}
+	
+	moveLeft(); //enters the room
+	delay(1200)
+	stopMoving();
+	
+	checkFire();
+	
+	moveLeft(); //leavs to the exsit
+	while(getLeftDis() > 10)
+	stopMoving();
+	
+	moveBackward(); //goes to the exsit of the room and to the intersection with the dog
+	while(getFrontDis() < 110)
+	stopMoving();
 }
 
 // returns the robot's rotation degree with respect to the initial angle.
