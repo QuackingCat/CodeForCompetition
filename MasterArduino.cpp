@@ -234,6 +234,93 @@ void Room4()
 	}
 	
 	else if(dogA) //if dog is in A
+	{
+		moveRight(); //gets in front of the room from under
+		while (getLeftDis() < 90)
+		stopMoving();
+		
+		if (getBackDis() > 20) //checks if you can go in from under
+		{
+			moveBackward(); //enters the room
+			delay(1200);
+			stopMoving();
+			
+			checkFire();
+			
+			moveForward(); //leavs the room
+			while (getFrontDis(); > 10)
+			stopMoving();
+		}
+		moveRight(); //gets to the main interesection
+		while (getLeftDis() < 138)
+		stopMoving();
+		
+		moveBackward(); //gets to the end
+		while (getBackDis() > 20)
+		stopMoving();
+		//turn led to high
+	}
+	
+	else //dog is in pos B
+	{
+		moveRight(); //gets in front of the room from under
+		while (getLeftDis() < 90)
+		stopMoving();
+		
+		if (getBackDis() > 20) //checks if you can go in from under and gets home
+		{
+			moveBackward(); //enters the room
+			delay(1200);
+			stopMoving();
+			
+			checkFire();
+			
+			moveForward(); //leavs the room
+			while (getFrontDis(); > 10)
+			stopMoving();
+			
+			moveRight(); //gets to the main interesection
+			while (getLeftDis() < 138)
+			stopMoving();
+
+			moveBackward(); //gets to home
+			while (getBackDis() > 20)
+			stopMoving();
+			//turn led to high
+		}
+		else
+		{
+			moveRight(); //gets to the main interesection
+			while (getLeftDis() < 138)
+			stopMoving();
+
+			moveBackward(); //gets to home
+			while (getBackDis() > 20)
+			stopMoving();
+			
+			moveLeft(); //gets in front of the room from the top side
+			while (getLeftDis() > 70)
+			stopMoving();
+			
+			moveForward(); //enters the room
+			delay(1200);
+			stopMoving();
+			
+			checkFire();
+			
+			moveBackward(); //leavs the room
+			while (getBackDis() > 10)
+			stopMoving();
+			
+			moveRight(); //arives home
+			while (getLeftDis() < 140)
+			stopMoving()
+			//turn LED to high
+		}
+		
+	}
+	
+	
 		
 }
 
