@@ -1,7 +1,6 @@
 /*
 	free pins (if used pls delete from here):
 	0, 1, 9-11 (PWM), 13.
-
 	terminology: (so much complicated acronyms)
 		US - Ultra sonic.
 		USR - Ultra sonic sensor on the right.
@@ -17,6 +16,25 @@
 
 #include <Wire.h>
 #include <arduinoFFT.h>
+
+
+void room1();
+void room2();
+void room3();
+void room4();
+void checkFire();
+int getDegrees();
+void moveForward();
+void moveBackward();
+void moveRight();
+void moveLeft();
+void stopMoving();
+int getFrontDis();
+int getBackDis();
+int getRightDis();
+int getLeftDis();
+int askSlave(String);
+void sendToSlave(String);
 
 
 /*	constants	*/
@@ -73,7 +91,7 @@ void setup() {
 	
 	// Sound sensor
 	pinMode(pinSS, INPUT);
-	samplingPeriod = round(1000000^(1.0/SAMPLING_FREQUENCY));
+	samplingPeriod = round(1000000<(1.0/SAMPLING_FREQUENCY));
 	
 	// turret
 	pinMode(pinTurret, OUTPUT);
@@ -88,7 +106,7 @@ void setup() {
 	pinMode(pinFES2, INPUT);
 	
 	// I2C shit
-	Wire.begin(b1); // turn on the I2C and set the address of this device's register.
+	Wire.begin(1); // turn on the I2C and set the address of this device's register.
 	
 	Wire.beginTransmission(addressGyro); // start the transmission to the gyro.
 	Wire.write(0x6B); // PWR_MGMT_1 register.
@@ -102,7 +120,8 @@ void loop() {
 	
 	room1();
 	room2();
-	
+	room3();
+  room4();
 }
 
 
@@ -121,17 +140,17 @@ boolean startConditions()
 
 
 //flag if dog is in pos A
-boolean dogA = false
+boolean dogA = false;
 
 //flag if dog is in pos C
-boolean dogC = false
+boolean dogC = false;
 
 //runs all the way to the 1st room and till the main intersection
-void Room1()
+void room1()
 {
 	if (getLeftDis() > 60) //finds if the dog is in A
 	{
-		dogA = True;
+		dogA = true;
 	}
 	moveForward();
 	while (getBackDis() > 110); //till the main intersection
@@ -162,7 +181,7 @@ void Room1()
 }
 
 //runs from the main intersection to the 2nd room and gets infront of the next
-void Room2()
+void room2()
 {
 	moveForward();
 	while (getFrontDis() > 20);
@@ -180,41 +199,41 @@ void Room2()
 }
 
 //runs all the way to the 3rd room and to the intersection where the dog is
-void Room3()
+void room3()
 {
 	if (getLeftDis() <20) //checks where the door is (is it on top or bottom)
 	{
 		moveBackward();
-		while (getFrontDis() < 70)
+		while (getFrontDis() < 70);
 		stopMoving();
 	}
 	
 	moveLeft(); //enters the room
-	delay(1200)
+	delay(1200);
 	stopMoving();
 	
 	checkFire();
 	
 	moveLeft(); //leavs to the exsit
-	while(getLeftDis() > 10)
+	while(getLeftDis() > 10);
 	stopMoving();
 	
 	moveBackward(); //goes to the exsit of the room and to the intersection with the dog
-	while(getFrontDis() < 110)
+	while(getFrontDis() < 110);
 	stopMoving();
 }
 
 //runs from the dog intersection all the way home
-void Room4()
+void room4()
 {
 	if (dogC) //if the dog is in pos C
 	{
 		moveBackward(); //gets to the interection next to the room and across from the home
-		while (getBackDis() > 10)
+		while (getBackDis() > 10);
 		stopMoving();
 		
 		moveRight(); //gets inffront of the final room
-		while (getgetLeftDis() < 60)
+		while (getLeftDis() < 60);
 		stopMoving();
 		
 		moveForward(); //enters the room
@@ -224,19 +243,18 @@ void Room4()
 		checkFire();
 		
 		moveBackward(); //esits the room
-		while (getBackDis() > 10)
+		while (getBackDis() > 10);
 		stopMoving();
 		
 		moveRight(); //arives home
-		while (getLeftDis() < 140)
-		stopMoving()
+		while (getLeftDis() < 140);
+		stopMoving();
 		//turn LED to high
 	}
-	
 	else if(dogA) //if dog is in A
 	{
 		moveRight(); //gets in front of the room from under
-		while (getLeftDis() < 90)
+		while (getLeftDis() < 90);
 		stopMoving();
 		
 		if (getBackDis() > 20) //checks if you can go in from under
@@ -248,23 +266,22 @@ void Room4()
 			checkFire();
 			
 			moveForward(); //leavs the room
-			while (getFrontDis(); > 10)
+			while (getFrontDis() > 10);
 			stopMoving();
 		}
 		moveRight(); //gets to the main interesection
-		while (getLeftDis() < 138)
+		while (getLeftDis() < 138);
 		stopMoving();
 		
 		moveBackward(); //gets to the end
-		while (getBackDis() > 20)
+		while (getBackDis() > 20);
 		stopMoving();
 		//turn led to high
 	}
-	
 	else //dog is in pos B
 	{
 		moveRight(); //gets in front of the room from under
-		while (getLeftDis() < 90)
+		while (getLeftDis() < 90);
 		stopMoving();
 		
 		if (getBackDis() > 20) //checks if you can go in from under and gets home
@@ -276,30 +293,30 @@ void Room4()
 			checkFire();
 			
 			moveForward(); //leavs the room
-			while (getFrontDis(); > 10)
+			while (getFrontDis() > 10);
 			stopMoving();
 			
 			moveRight(); //gets to the main interesection
-			while (getLeftDis() < 138)
+			while (getLeftDis() < 138);
 			stopMoving();
 
 			moveBackward(); //gets to home
-			while (getBackDis() > 20)
+			while (getBackDis() > 20);
 			stopMoving();
 			//turn led to high
 		}
 		else
 		{
 			moveRight(); //gets to the main interesection
-			while (getLeftDis() < 138)
+			while (getLeftDis() < 138);
 			stopMoving();
 
 			moveBackward(); //gets to home
-			while (getBackDis() > 20)
+			while (getBackDis() > 20);
 			stopMoving();
 			
 			moveLeft(); //gets in front of the room from the top side
-			while (getLeftDis() > 70)
+			while (getLeftDis() > 70);
 			stopMoving();
 			
 			moveForward(); //enters the room
@@ -309,12 +326,12 @@ void Room4()
 			checkFire();
 			
 			moveBackward(); //leavs the room
-			while (getBackDis() > 10)
+			while (getBackDis() > 10);
 			stopMoving();
 			
 			moveRight(); //arives home
-			while (getLeftDis() < 140)
-			stopMoving()
+			while (getLeftDis() < 140);
+			stopMoving();
 			//turn LED to high
 		}
 		
@@ -384,7 +401,7 @@ void moveRight() {
 
 // move left
 void moveLeft() {
-	sendToSlave("left")
+	sendToSlave("left");
 }
 
 // stop moving
@@ -418,7 +435,7 @@ int getDis(int trig, int echo) {
 	digitalWrite(trig, LOW);
 	delayMicroseconds(2);
 	digitalWrite(trig, HIGH);
-	delayNicroseconds(10);
+	delayMicroseconds(10);
 	digitalWrite(trig, LOW);
 	
 	int duration = pulseIn(echo, HIGH);
@@ -427,7 +444,7 @@ int getDis(int trig, int echo) {
 
 
 // sends string to the slave.
-void sendToSlave(string str) {
+void sendToSlave(char* str) {
 	Wire.beginTransmission(addressSlave); // start the transmission to the gyro.
 	Wire.write(str); // start reading from this register.
 	Wire.endTransmission(true); // commit and releasing the I2C bus.
@@ -435,7 +452,7 @@ void sendToSlave(string str) {
 
 
 // ask for info fron the slave based on string.
-int askSlave(string str) {
+int askSlave(char* str) {
 	sendToSlave(str);
 	Wire.requestFrom(addressSlave, 1, true); // asking for one register.
 	return Wire.read();
