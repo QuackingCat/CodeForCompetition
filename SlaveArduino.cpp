@@ -13,7 +13,7 @@
 /*	libraries	*/
 
 #include <Wire.h>
-#include <string.h>
+#include <String.h>
 
 
 /*	constants	*/
@@ -38,11 +38,11 @@
 #define pinRefLight A0
 
 // I2C registers' addresses
-#define addressMaster b1 // The address of the master's register
+#define addressMaster 0b1 // The address of the master's register
 
 
 /*	variables	*/
-string lstTrans = ""; // holds the last transmission from the master.
+char *lstTrans = ""; // holds the last transmission from the master.
 
 
 /*	main code	*/
@@ -55,19 +55,19 @@ void setup() {
 	pinMode(pinEchoUSB, OUTPUT);
 	
 	// Motors' controllers
-	pinMode(pinPrimeAxis1,OUTPUT);
-	pinMode(pinPrimeAxis2,OUTPUT);
-	pinMode(pinSecAxis1,OUTPUT);
-	pinMode(pinSecAxis2,OUTPUT);
-	pinMode(pinSecAxis3,OUTPUT);
-	pinMode(pinSecAxis4,OUTPUT);
+	pinMode(pinPrimeAxis1, OUTPUT);
+	pinMode(pinPrimeAxis2, OUTPUT);
+	pinMode(pinSecAxis1, OUTPUT);
+	pinMode(pinSecAxis2, OUTPUT);
+	pinMode(pinSecAxis3, OUTPUT);
+	pinMode(pinSecAxis4, OUTPUT);
 	
-	// Reflected light sensor
-	pinMode(pinRedLight, INPUT);
-	
+  // Reflected light sensor
+  pinMode(pinRefLight, INPUT);
+
 	// I2C shit
-	Wire.begin(b1000101); // turn on the I2C and set the address of this device's register.
-	Wire.onReceive(receiveEvent); // when asked to deliver info.
+	Wire.begin(0b1000101); // turn on the I2C and set the address of this device's register.
+	Wire.onReceive(recieveEvent); // when asked to deliver info.
 	Wire.onRequest(requestEvent); // when asked to do something.
 }
 
@@ -81,7 +81,7 @@ void loop() {
 void recieveEvent(int input) {
 	lstTrans = "";
 	while (Wire.available()) // adding the transmission to "lstTrans" character by character.
-		lastTrans += (char)Wire.read();
+		lstTrans += (char)Wire.read();
 	
 	// handling the received data
 	if (strcmp(lstTrans, "forward"))
@@ -89,21 +89,22 @@ void recieveEvent(int input) {
 	else if (strcmp(lstTrans, "backward"))
 		moveBackward();
 	else if (strcmp(lstTrans, "right"))
-		moveveRight();
+		moveRight();
 	else if (strcmp(lstTrans, "left"))
 		moveLeft();
 	else if (strcmp(lstTrans, "stop"))
+    stopMoving();
 }
 
 
 // when the msater asks for data this function will start.
 void requestEvent() {
 	if (strcmp(lstTrans, "isWhiteArea"))
-		send(checkWhiteArea());
+		Wire.write(checkWhiteArea());
 	else if (strcmp(lstTrans, "disFront"))
-		send(getFrontDis());
+		Wire.write(getFrontDis());
 	else if (strcmp(lstTrans, "disBack"))
-		send(getBackDis());
+		Wire.write(getBackDis());
 }
 
 
@@ -114,7 +115,7 @@ void moveForward() {
 	digitalWrite(pinSecAxis1, HIGH);
 	digitalWrite(pinSecAxis2, LOW);
 	digitalWrite(pinSecAxis3, HIGH);
-	digitalWrite(pinSecAxis4, Low);
+	digitalWrite(pinSecAxis4, LOW);
 }
 
 
@@ -136,7 +137,7 @@ void moveRight() {
 	digitalWrite(pinSecAxis1, LOW);
 	digitalWrite(pinSecAxis2, LOW);
 	digitalWrite(pinSecAxis3, LOW);
-	digitalWrite(pinSecAxis4, Low);
+	digitalWrite(pinSecAxis4, LOW);
 }
 
 
@@ -147,7 +148,7 @@ void moveLeft() {
 	digitalWrite(pinSecAxis1, LOW);
 	digitalWrite(pinSecAxis2, LOW);
 	digitalWrite(pinSecAxis3, LOW);
-	digitalWrite(pinSecAxis4, Low);
+	digitalWrite(pinSecAxis4, LOW);
 }
 
 
@@ -158,7 +159,7 @@ void stopMoving() {
 	digitalWrite(pinSecAxis1, LOW);
 	digitalWrite(pinSecAxis2, LOW);
 	digitalWrite(pinSecAxis3, LOW);
-	digitalWrite(pinSecAxis4, Low);
+	digitalWrite(pinSecAxis4, LOW);
 }
 
 
@@ -177,7 +178,7 @@ int getDis(int trig, int echo) {
 	digitalWrite(trig, LOW);
 	delayMicroseconds(2);
 	digitalWrite(trig, HIGH);
-	delayNicroseconds(10);
+	delayMicroseconds(10);
 	digitalWrite(trig, LOW);
 	
 	int duration = pulseIn(echo, HIGH);
@@ -187,6 +188,6 @@ int getDis(int trig, int echo) {
 
 // return true if there is white area under the robot.
 boolean checkWhiteArea() {
-	int loewerBoundWhite = 100;
-	return analogRead(pinRedLight) < lowerBoundWhite;
+	int lowerBoundWhite = 100;
+	return analogRead(pinRefLight) < lowerBoundWhite;
 }
